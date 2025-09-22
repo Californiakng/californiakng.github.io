@@ -14,8 +14,12 @@
 ![UScrimeRegistry](UScrimeRegistry.png)
 
 # Project 2
-**tittle:
-SQL Code:
-SQL Skills Used:
-Project Description:
-Technology used:
+**tittle:**
+
+**SQL Code:**
+
+**SQL Skills Used:**
+
+**Project Description:**
+
+**Technology used:**
