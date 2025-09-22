@@ -1,0 +1,151 @@
+
+SELECT *
+FROM [dbo].[Food Sales Data]
+
+SELECT CITY
+		,REGION
+		,SUM ([TotalPrice]) AS [TOTAL PRICE]
+FROM [dbo].[Food Sales Data]
+GROUP BY [City], [Region]
+
+
+SELECT CITY
+		,MAX ([QTY]) AS [MAX PRICE]
+FROM [dbo].[Food Sales Data]
+GROUP BY [City]
+
+
+SELECT TOP (1)  [ID], CITY
+		,MAX(QTY) AS [MAX SALES]
+FROM [dbo].[Food Sales Data]
+GROUP BY [City], [ID]
+ORDER BY MAX(QTY) DESC
+
+
+SELECT TOP (1)  *
+		,SUM(QTY) AS [MAX SALES]
+FROM [dbo].[Food Sales Data]
+GROUP BY [ID]
+      ,[Date]
+      ,[Region]
+      ,[City]
+      ,[Category]
+      ,[Product]
+      ,[Qty]
+      ,[UnitPrice]
+      ,[TotalPrice]
+ORDER BY SUM(QTY) DESC
+
+SELECT PRODUCT
+           ,MAX ([Qty])
+FROM [dbo].[Food Sales Data]
+GROUP BY PRODUCT
+
+--WINDOWS FUNCTION---
+
+SELECT *,
+         MAX (Qty) OVER () AS [MAXIMUM_QTY]
+FROM [dbo].[Food Sales Data]
+
+SELECT *,
+MAX(QTY) OVER (PARTITION BY [Product]) AS [MAXIMUM_QTY]
+FROM [dbo].[Food Sales Data]
+WHERE PRODUCT = 'BRAN'
+
+SELECT  *,
+MAX(QTY) OVER (PARTITION BY [REGION]) AS [MAXIMUM_QTY]
+FROM [dbo].[Food Sales Data]
+WHERE PRODUCT = 'BRAN'
+
+SELECT  *,
+MAX(QTY) OVER (PARTITION BY [REGION]) AS [MAXIMUM_QTY]
+FROM [dbo].[Food Sales Data]
+WHERE PRODUCT = 'BRAN'
+
+SELECT * ,
+ROW_NUMBER () OVER (ORDER BY [ID])
+FROM [dbo].[Food Sales Data]
+
+
+
+--row_mumber -- data quality issues
+
+
+--CTE - COMMON TABLE EXPRESSION
+
+WITH CTE AS (
+SELECT * 
+        ,ROW_NUMBER () OVER (PARTITION BY [ID] ORDER BY [ID]) AS [ROW_NUM]                                                                                                                                                                
+FROM [dbo].[Food Sales Data]
+)
+
+SELECT *
+FROM CTE
+WHERE [ROW_NUM] > 1
+
+
+--RANK FUNCTION--- USED TO RAN DATASETS
+WITH NEW_SAMPLE_TABLE AS (
+SELECT *
+        , RANK () OVER (PARTITION BY [Product] ORDER BY [QTY] DESC) AS QTY_RANKING
+FROM [dbo].[Food Sales Data]
+)
+
+SELECT *
+FROM NEW_SAMPLE_TABLE
+WHERE QTY_RANKING <= 2
+
+
+--SQL CASE STATEMENT
+
+SELECT MAX ([DATEOFJOINING]) AS [USED TO GET THE LATEST INFO]
+FROM [dbo].[EMP_DETAILS_SALARY]
+
+SELECT *
+       ,CASE 
+            WHEN  [DateOfJoining] < '2020-03-01' THEN 'EXPIRED CASES'
+            ELSE 'ACTIVE CASES'
+            END AS [INCIDENT STATUS]
+
+       ,CASE 
+            WHEN [SALARY] <'8000' THEN 'CHEAP'
+            WHEN [SALARY] BETWEEN '8000' AND '15000' THEN 'AFFORDABLE'
+            ELSE 'EXPENSIVE'
+            END AS [AFFORDABILITY STATUS]
+
+       ,CASE 
+            WHEN [City] = 'CALIFORNIA' THEN 'UNITED STATES OF AMERICA'
+            ELSE [City]
+            END AS [AFFORDABILITY STATUS]
+        
+FROM [dbo].[EMP_DETAILS_SALARY]
+
+
+-- SQL JOIN CLAUSE-- USED TO COMBINE RECORDS FROM TWO OR MORE TABLES
+
+SELECT I.[EmpID]
+      ,I.[EmpFname]
+      ,I.[EmpLname]
+      ,I.[Department]
+      ,I.[Project]
+      ,I.[Address]
+      ,I.[DOB]
+      ,I.[Gender]
+      ,P.[EmpPosition]
+      ,P.[DateOfJoining]
+  FROM [dbo].[joiner 1] AS I
+ FULL OUTER JOIN [dbo].[joiner 2] AS P
+  ON I.[EMPID] = P.[EMPID]
+
+
+  --SQL SUBQUERY--
+
+  SELECT *
+  FROM [dbo].[joiner 1]
+  WHERE [EmpID] IN (SELECT [EmpID]
+                    FROM [dbo].[joiner 2]
+                    WHERE [EmpPosition] = 'MANAGER'
+                    )
+
+
+
