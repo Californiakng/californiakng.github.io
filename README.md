@@ -14,12 +14,14 @@
 ![UScrimeRegistry](UScrimeRegistry.png)
 
 # Project 2
-**tittle:**
+**tittle:** Customer Insight - Data Manipulation and Interrogation
 
 **SQL Code:**
+![FoodDatas.png](FoodDatas.png)
 
-**SQL Skills Used:**
+**SQL Skills Used:** Database design and normalization (3NF), creation of tables with primary and foreign keys, data integrity enforcement with constraints, data manipulation (INSERT, UPDATE, DELETE), complex data retrieval with JOINs (INNER, LEFT, RIGHT), subqueries and Common Table Expressions (CTEs), aggregation with GROUP BY and HAVING, window functions (ROW\_NUMBER, RANK, DENSE\_RANK), date and time functions for trend analysis, query optimization using indexes, and exporting query results to external files.
 
-**Project Description:**
 
-**Technology used:**
+**Project Description:** 
+
+**Technology used:** SQL Server
